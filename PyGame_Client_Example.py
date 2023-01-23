@@ -9,7 +9,9 @@ SERVER_HOST = "127.0.0.1"
 SERVER_PORT = 49637
 Client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 Client.connect((SERVER_HOST, SERVER_PORT))
-print("Setup of networked client complete")
+SERVER_PORT = str(SERVER_PORT)
+print("Connected to server at " + SERVER_HOST + ":" + SERVER_PORT)
+SERVER_PORT = int(SERVER_PORT)
 
 #Game Variables
 Running = True
@@ -77,46 +79,54 @@ while Running:
         Running = False
     
     if IsPlayer == 1:
-            if pygame.key.get_pressed()[pygame.K_a]:
-                SERVER_SENDING = "Player1Left"
-                Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-                Player1X -= MovementSpeed
+        if pygame.key.get_pressed()[pygame.K_a]:
+            SERVER_SENDING = "Player1Left"
+            Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
+            Player1X = int(Player1X)
+            Player1X -= MovementSpeed
 
-            if pygame.key.get_pressed()[pygame.K_d]:
-                SERVER_SENDING = "Player1Right"
-                Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-                Player1X += MovementSpeed
+        if pygame.key.get_pressed()[pygame.K_d]:
+            SERVER_SENDING = "Player1Right"
+            Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
+            Player1X = int(Player1X)
+            Player1X += MovementSpeed
 
-            if pygame.key.get_pressed()[pygame.K_w]:
-                SERVER_SENDING = "Player1Up"
-                Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-                Player1Y -= MovementSpeed
+        if pygame.key.get_pressed()[pygame.K_w]:
+            SERVER_SENDING = "Player1Up"
+            Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
+            Player1Y = int(Player1Y)
+            Player1Y -= MovementSpeed
     
-            if pygame.key.get_pressed()[pygame.K_s]:
-                SERVER_SENDING = "Player1Down"
-                Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-                Player1Y += MovementSpeed
+        if pygame.key.get_pressed()[pygame.K_s]:
+            SERVER_SENDING = "Player1Down"
+            Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
+            Player1Y = int(Player1Y)
+            Player1Y += MovementSpeed
 
     elif IsPlayer == 2:
-            if pygame.key.get_pressed()[pygame.K_a]:
-                SERVER_SENDING = "Player2Left"
-                Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-                Player2X -= MovementSpeed
+        if pygame.key.get_pressed()[pygame.K_a]:
+            SERVER_SENDING = "Player2Left"
+            Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
+            Player2X = int(Player2X)
+            Player2X -= MovementSpeed
 
-            if pygame.key.get_pressed()[pygame.K_d]:
-                SERVER_SENDING = "Player2Right"
-                Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-                Player2X += MovementSpeed
+        if pygame.key.get_pressed()[pygame.K_d]:
+            SERVER_SENDING = "Player2Right"
+            Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
+            Player2X = int(Player2X)
+            Player2X += MovementSpeed
 
-            if pygame.key.get_pressed()[pygame.K_w]:
-                SERVER_SENDING = "Player2Up"
-                Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-                Player2Y -= MovementSpeed
+        if pygame.key.get_pressed()[pygame.K_w]:
+            SERVER_SENDING = "Player2Up"
+            Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
+            Player2Y = int(Player2Y)
+            Player2Y -= MovementSpeed
     
-            if pygame.key.get_pressed()[pygame.K_s]:
-                SERVER_SENDING = "Player2Down"
-                Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-                Player2Y += MovementSpeed
+        if pygame.key.get_pressed()[pygame.K_s]:
+            SERVER_SENDING = "Player2Down"
+            Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
+            Player2Y = int(Player2Y)
+            Player2Y += MovementSpeed
     
     if P1X == True:
         Player1X = LatestRecievedDataStr
@@ -146,6 +156,15 @@ while Running:
             P1X = True
         elif SERVER_RECIEVED_STRING == "Player1Y":
             P1Y = True
+    
+    if SERVER_RECIEVED_STRING == "Player1DC":
+        Running = False
+    
+    elif SERVER_RECIEVED_STRING == "Player2DC":
+        Running = False
+    
+    elif SERVER_RECIEVED_STRING == "ServerShutdown":
+        Running = False
     
     if Timer == False:
         TimerStartTime = time.time()
@@ -192,11 +211,11 @@ while Running:
             print("Attempting to send player position to server")
             SERVER_SENDING = "Player2PositionX"
             Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-            SERVER_SENDING = Player2X
+            SERVER_SENDING = str(Player2X)
             Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
             SERVER_SENDING = "Player2PositionY"
             Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
-            SERVER_SENDING = Player2Y
+            SERVER_SENDING = str(Player2Y)
             Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
     
     ObjectScreen.fill(Screen_Background)
