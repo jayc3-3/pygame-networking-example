@@ -1,2 +1,2 @@
 # pygame-networking-example
-An example for a networked game made in PyGame
+This is a example of a networked client/server based multiplayer example made in Python, using PyGame for graphics and input
