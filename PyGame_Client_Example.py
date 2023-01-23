@@ -4,8 +4,8 @@ from pygame.locals import *
 import socket
 
 #Client Setup
-SERVER_HOST = ""
-SERVER_PORT = 0
+SERVER_HOST = "127.0.0.1"
+SERVER_PORT = 49637
 SERVER_SENDING = ""
 SERVER_RECIEVED = ""
 SERVER_RECIEVED_STRING = ""
