@@ -3,5 +3,5 @@ This is a example of a networked client/server based multiplayer example made in
 
 All of these modules use localhost for networking, the server and client(s) need to be run on the same machine.
 
-The client module waits whenever it calls "Client.recvfrom()", so the module will stop unless server was running when client started.
+The client does not start if the server is not running.
 The client will crash if server closes while client is open.
