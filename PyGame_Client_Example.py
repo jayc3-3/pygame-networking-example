@@ -15,6 +15,10 @@ print("Setup of networked client complete")
 Running = True
 Timer = False
 Do_Once = False
+P1X = False
+P1Y = False
+P2X = False
+P2Y = False
 TimerStartTime = 0
 TimerCurrentTime = 0
 IsPlayer = 0
@@ -68,6 +72,10 @@ elif SERVER_RECIEVED_STRING == "IsP2":
     IsPlayer = 2
 
 while Running:
+    
+    if SERVER_RECIEVED_STRING == "ServerShutdown":
+        Running = False
+    
     if IsPlayer == 1:
             if pygame.key.get_pressed()[pygame.K_a]:
                 SERVER_SENDING = "Player1Left"
@@ -110,9 +118,34 @@ while Running:
                 Client.sendto(SERVER_SENDING.encode(), (SERVER_HOST, SERVER_PORT))
                 Player2Y += MovementSpeed
     
+    if P1X == True:
+        Player1X = LatestRecievedDataStr
+        P1X = False
+
+    if P1Y == True:
+        Player1Y = LatestRecievedDataStr
+        P1Y = False
+        
+    if P2X == True:
+        Player2X = LatestRecievedDataStr
+        P2X = False
+
+    if P2Y == True:
+        Player2Y = LatestRecievedDataStr
+        P2Y = False
+    
     if IsPlayer == 1:
         SERVER_RECIEVED_STRING = str(SERVER_RECIEVED, 'utf-8')
-        if SERVER_RECIEVED_STRING = "Player2X"
+        if SERVER_RECIEVED_STRING == "Player2X":
+            P2X = True
+        elif SERVER_RECIEVED_STRING == "Player2Y":
+            P2Y = True
+    elif IsPlayer == 2:
+        SERVER_RECIEVED_STRING = str(SERVER_RECIEVED, 'utf-8')
+        if SERVER_RECIEVED_STRING == "Player1X":
+            P1X = True
+        elif SERVER_RECIEVED_STRING == "Player1Y":
+            P1Y = True
     
     if Timer == False:
         TimerStartTime = time.time()
