@@ -1,4 +1,4 @@
-#This module sends a message to a server to initiate a shutdown
+#This module sends a message to the server to shut down, make sure it's ran on the same machine as the server
 import socket
 
 HOST = "127.0.0.1"
